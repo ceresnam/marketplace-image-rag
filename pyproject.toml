@@ -1,0 +1,57 @@
+[project]
+name = "marketplace-image-classification"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "databricks-connect==18.0.0",
+    "jupyterlab==4.5.0",
+    "matplotlib==3.10.7",
+    "numpy==2.2.6",
+    "pandas==2.3.3",
+    "scikit-learn==1.7.2",
+    "timm==1.0.22",
+    "torch==2.9.1",
+    "torchvision==0.24.1",
+]
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # pylint
+    "PL",
+]
+ignore = [
+    # magic-value-comparison https://docs.astral.sh/ruff/rules/magic-value-comparison/
+    "PLR2004", 
+    # too-many-arguments https://docs.astral.sh/ruff/rules/too-many-arguments/
+    "PLR0913",
+    # collapsible-else-if https://docs.astral.sh/ruff/rules/collapsible-else-if/
+    "PLR5501",
+    # too-many-branches https://docs.astral.sh/ruff/rules/too-many-branches/
+    "PLR0912",
+    # too-many-statements https://docs.astral.sh/ruff/rules/too-many-statements/
+    "PLR0915",
+    # import-outside-top-level https://docs.astral.sh/ruff/rules/import-outside-top-level/
+    "PLC0415",
+    # too-many-return-statements https://docs.astral.sh/ruff/rules/too-many-return-statements/
+    "PLR0911"
+]
+
+# [tool.ruff]
+# line-length = 100
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
