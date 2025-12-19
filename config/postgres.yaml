@@ -1,0 +1,27 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: marketplace
+spec:
+  instances: 1
+  enablePDB: false
+  storage:
+    size: 3Gi
+  bootstrap:
+    initdb:
+      database: marketplace_dev
+      owner: mp_dev
+      postInitTemplateSQL:
+        - "CREATE EXTENSION IF NOT EXISTS vector;"
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: marketplace-metrics
+spec:
+  selector:
+    matchLabels:
+      cnpg.io/cluster: marketplace
+  podMetricsEndpoints:
+    - port: metrics

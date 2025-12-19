@@ -1,0 +1,29 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/spark/values.yaml
+
+global:
+  security:
+    allowInsecureImages: true
+
+image:
+  repository: bitnamilegacy/spark
+
+master:
+  replicaCount: 1
+  # resources:
+  #   requests:
+  #     memory: 512Mi
+  #   limits:
+  #     memory: 1Gi
+  service:
+    type: ClusterIP
+    ports:
+      http: 80
+      cluster: 7077
+
+worker:
+  replicaCount: 4
+  # resources:
+  #   requests:
+  #     memory: 512Mi
+  #   limits:
+  #     memory: 1Gi

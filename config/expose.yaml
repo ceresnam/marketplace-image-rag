@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: marketplace-external
+  namespace: postgres
+spec:
+  type: LoadBalancer
+  ports:
+    - name: postgres
+      port: 5432
+  selector:
+    cnpg.io/cluster: marketplace
+    role: primary
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-external
+  namespace: spark
+spec:
+  type: LoadBalancer
+  ports:
+    - name: cluster
+      port: 7077
+    - name: http
+      port: 8080
+  selector:
+    app.kubernetes.io/component: master
+    app.kubernetes.io/instance: spark
+    app.kubernetes.io/name: spark
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-external
+  namespace: prometheus
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http-web
+      port: 3000
+  selector:
+    app.kubernetes.io/instance: prometheus-community
+    app.kubernetes.io/name: grafana
