@@ -1,0 +1,23 @@
+{
+  // make sure the settings below is not present in either user and
+  // workspace settings so adding ids to messages on save works
+  // "eslint.codeActionsOnSave.rules": [],
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  // "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.importFormat": "relative",
+  "files.exclude": {
+    ".venv/": true
+  },
+  "cSpell.allowCompoundWords": true,
+  "cSpell.diagnosticLevel": "Hint",
+  "cSpell.language": "en,sk",
+  "cSpell.words": []
+}
