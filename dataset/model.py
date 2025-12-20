@@ -6,6 +6,7 @@ from torch import nn, optim
 from torchmetrics import Accuracy
 
 from .const import EMBEDDING_DIM
+from .loss import WeightedASLSingleLabel
 
 
 class DinoV2Base(torch.nn.Module):
@@ -58,6 +59,7 @@ class DinoV2Classification(pl.LightningModule):
         dropout: float = 0.2,
         num_classes: int = 10,
         mlp: bool = False,
+        class_weights: list[float] | None = None,
     ):
         """
         Initializes the LightningModule with configurable layer parameters.
@@ -87,7 +89,8 @@ class DinoV2Classification(pl.LightningModule):
         self.model = nn.Sequential(backbone, head)
 
         # Initialize the loss function.
-        self.loss_fn = nn.CrossEntropyLoss()
+        # self.loss_fn = nn.CrossEntropyLoss()
+        self.loss_fn = WeightedASLSingleLabel(class_weights=class_weights, gamma_neg=2)
 
         # Initialize metrics to track accuracy for training and validation.
         self.val_accuracy = Accuracy(
