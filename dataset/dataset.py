@@ -43,6 +43,7 @@ class MarketplaceDataModule(pl.LightningDataModule):
     train_dataset: VisionDataset | None = None
     val_dataset: VisionDataset | None = None
     test_dataset: VisionDataset | None = None
+    predict_dataset: VisionDataset | None = None
 
     def __init__(
         self,
@@ -59,14 +60,21 @@ class MarketplaceDataModule(pl.LightningDataModule):
 
     def setup(self, stage):
         self.full_dataset = ImageFolder(root=self.data_dir)
+        full_dataset_with_val_transform = ImageFolder(
+            root=self.data_dir, transform=self.val_transform
+        )
+        full_dataset_with_train_transform = ImageFolder(
+            root=self.data_dir, transform=self.val_transform
+        )
 
         # Stratified split into train/val/test sets keeping class distribution
         train_indices, val_indices, test_indices = _stratified_split(
             self.full_dataset, TRAIN_RATIO, VAL_RATIO, TEST_RATIO
         )
-        self.train_dataset = Subset(self.full_dataset, train_indices)
-        self.val_dataset = Subset(self.full_dataset, val_indices)
-        self.test_dataset = Subset(self.full_dataset, test_indices)
+        self.train_dataset = Subset(full_dataset_with_train_transform, train_indices)
+        self.val_dataset = Subset(full_dataset_with_val_transform, val_indices)
+        self.test_dataset = Subset(full_dataset_with_val_transform, test_indices)
+        self.predict_dataset = full_dataset_with_val_transform
 
     def train_dataloader(self):
         """Returns the DataLoader for the training set."""
@@ -101,7 +109,7 @@ class MarketplaceDataModule(pl.LightningDataModule):
     def predict_dataloader(self):
         """Returns the DataLoader for the prediction set."""
         return DataLoader(
-            self.full_dataset,
+            self.predict_dataset,
             batch_size=self.batch_size,
             shuffle=False,
             num_workers=self.num_workers,

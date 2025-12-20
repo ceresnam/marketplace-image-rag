@@ -15,7 +15,8 @@ helm upgrade --install \
 
 kubectl get namespace postgres || kubectl create namespace postgres
 kubectl --namespace postgres apply -f ./config/postgres.yaml
-# Get postgres password by running:
+# Get postgres username and password by running:
+#   kubectl -n postgres get secret marketplace-app -o jsonpath='{.data.username}' | base64 -d
 #   kubectl -n postgres get secret marketplace-app -o jsonpath='{.data.password}' | base64 -d
 
 # install Prometheus + Grafana for monitoring

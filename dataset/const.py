@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Dataset paths
@@ -18,3 +19,17 @@ NUM_WORKERS = 6
 TRAIN_RATIO = 0.7
 VAL_RATIO = 0.15
 TEST_RATIO = 0.15
+
+# https://github.com/facebookresearch/dinov2/blob/main/MODEL_CARD.md
+EMBEDDING_DIM = (
+    # 384  # DINOv2 ViT-S model
+    768  # DINOv2 ViT-B model
+    # 1024  # DINOv2 ViT-L model
+    # 1536  # DINOv2 ViT-g model
+)
+
+# see scripts/devenv.sh
+DB_USER = os.environ.get("DB_USER")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+DB_HOST = os.environ.get("DB_HOST")
+DB_NAME = os.environ.get("DB_NAME")
