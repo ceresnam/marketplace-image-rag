@@ -1,13 +1,23 @@
 from datetime import UTC, datetime
 
 from pgvector.sqlalchemy import Vector
-from sqlalchemy import Column
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from sqlalchemy import Column, Index
+from sqlmodel import Field, Session, SQLModel, create_engine
 
 from .const import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER, EMBEDDING_DIM
 
 
 class ImageEmbedding(SQLModel, table=True):
+    __table_args__ = (
+        Index(
+            "ix_imageembedding_embedding_hnsw",
+            "embedding",
+            postgresql_using="hnsw",
+            postgresql_with={"m": 16, "ef_construction": 64},
+            postgresql_ops={"embedding": "vector_l2_ops"},
+        ),
+    )
+
     id: int | None = Field(default=None, primary_key=True)
     image_path: str = Field(index=True)
     embedding: list[float] = Field(sa_column=Column(Vector(EMBEDDING_DIM)))
