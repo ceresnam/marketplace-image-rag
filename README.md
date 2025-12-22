@@ -1,4 +1,4 @@
-# Marketplace Image Classification
+# Marketplace Image RAG
 
 ## Project Overview
 
@@ -39,7 +39,7 @@ marketplace-image-rag/
 ├── README.md                        # This file
 ├── pyproject.toml                   # Project dependencies (uv)
 │
-├── marketplace/                         # Dataset and model code
+├── marketplace/                     # Dataset and model code
 │   ├── const.py                     # Constants (ImageNet stats, etc.)
 │   ├── dataset.py                   # PyTorch Dataset and DataModule
 │   ├── db.py                        # Database utilities
